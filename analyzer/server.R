@@ -11,7 +11,7 @@ function(input, output) {
             filter = 'top'
         )
     )
-    output$trend <-renderPlot({
+    output$trend <-renderPlotly({
         stock_trend <- stocks %>% filter(ticker == input$ticker)
         market_trend <- stocks %>% filter(ticker == input$market)
         consoles_point <- consoles
@@ -25,37 +25,41 @@ function(input, output) {
                 geom_line(data=stock_trend, aes(x=year, y=avg_close), color="#56B4E9", size=3) +
                 geom_line(data=market_trend, aes(x=year, y=avg_close), color="gray", size=2) +
                 scale_y_continuous(trans='log10') +
-                geom_point(data=consoles_point, aes(x=year, y=avg_close), size=3) +
+                geom_point(data=consoles_point, aes(x=year, y=avg_close, shape="Consoles"), size=3) +
                 scale_x_continuous(breaks=stock_trend$year, 
                                    labels=substr(stock_trend$year,3,4),
                                    limits=c(min(stock_trend$year),max(stock_trend$year))) +
                 expand_limits(y=0) +
-                ggtitle(paste(input$ticker, "Stock Trend")) +
+                ggtitle(paste(input$ticker, "Stock Trend\n")) +
                 xlab("Year") +
-                ylab("\nAverage Close Price\n") +
-                theme(plot.title = element_text(size = 36, hjust = 0.5),
-                      axis.text.x = element_text(size = 16),
-                      axis.text.y = element_text(size = 16),
-                      axis.title.x = element_text(size = 22),
-                      axis.title.y = element_text(size = 22),
-                      panel.grid.minor.x = element_blank())
+                ylab("\nAverage Close Price ($)\n") +
+                theme(plot.title = element_text(size = 32, hjust = 0.5),
+                      axis.text.x = element_text(size = 12, angle=45),
+                      axis.text.y = element_text(size = 12),
+                      axis.title.x = element_text(size = 20),
+                      axis.title.y = element_text(size = 20),
+                      panel.grid.minor.x = element_blank(),
+                      rect = element_rect(fill = "transparent"),
+                      legend.title=element_blank())
         } else {
             ggplot() +
-                geom_line(data=stock_trend, aes(x=year, y=avg_close), color="#56B4E9", size=2) +
-                geom_point(data=consoles_point, aes(x=year, y=avg_close), size=3) +
+                geom_line(data=stock_trend, aes(x=year, y=avg_close), color="#56B4E9", size=3) +
+                geom_point(data=consoles_point, aes(x=year, y=avg_close, shape="Consoles"), size=3) +
                 scale_x_continuous(breaks=stock_trend$year, 
                                    labels=substr(stock_trend$year,3,4),
                                    limits=c(min(stock_trend$year),max(stock_trend$year))) +
                 expand_limits(y=0) +
-                ggtitle(paste(input$ticker, "and Console Releases")) +
+                ggtitle(paste(input$ticker, "Stock Trend\n")) +
                 xlab("Year") +
-                ylab("\nAverage Close Price\n") +
-                theme(plot.title = element_text(size = 36, hjust = 0.5),
-                      axis.text.x = element_text(size = 16),
-                      axis.text.y = element_text(size = 16),
-                      axis.title.x = element_text(size = 22),
-                      axis.title.y = element_text(size = 22),
-                      panel.grid.minor.x = element_blank())
+                ylab("\nAverage Close Price ($)\n") +
+                theme(plot.title = element_text(size = 32, hjust = 0.5),
+                      axis.text.x = element_text(size = 12, angle=45),
+                      axis.text.y = element_text(size = 12),
+                      axis.title.x = element_text(size = 20),
+                      axis.title.y = element_text(size = 20),
+                      panel.grid.minor.x = element_blank(),
+                      rect = element_rect(fill = "transparent"),
+                      legend.title=element_blank())
         }
 
     })

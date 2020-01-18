@@ -4,7 +4,7 @@ header <- dashboardHeader(
 
 sidebar <- dashboardSidebar(
     sidebarMenu(
-        menuItem("Research", tabName = "research", icon = icon("comment")),
+        menuItem("Introduction", tabName = "intro", icon = icon("comment")),
         menuItem("Trends", tabName = "trends", icon = icon("chart-line")),
         menuItem("Data Tables", tabName = "tables", icon = icon("table"),
                  menuItem("Console Data", tabName = "console-table"),
@@ -16,7 +16,7 @@ sidebar <- dashboardSidebar(
 
 body <- dashboardBody(
     tabItems(
-        tabItem(tabName = "research",
+        tabItem(tabName = "intro",
                 h2("Video Game Consoles and the Stock Market"),
                 h3("Purpose"),
                 p("To answer whether the release of a video game console translates to increased stock price for companies with exposure to that market, such as GameStop, Target, Walmart, or BestBuy."),
@@ -71,7 +71,7 @@ body <- dashboardBody(
                     h5("Consoles by Manufacturer:"),
                     c("All", unique(as.character(consoles$manufacturer)))
                 ),
-                plotOutput("trend", width = "100%", height = "400px")
+                plotlyOutput("trend", width = "100%", height = "400px")
         ),
         tabItem(tabName = "console-table",
                 h2("Console Data"),
